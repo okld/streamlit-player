@@ -2,15 +2,14 @@ import {
   Streamlit,
   ComponentProps,
   withStreamlitConnection
-} from "streamlit-component-lib";
-import React, { useEffect, useRef, useState } from "react"
+} from "streamlit-component-lib"
+import React, { useEffect, useState } from "react"
 
 import ReactPlayer from "react-player"
-import ResizeObserver from "resize-observer-polyfill"
+import HeightObserver from "./height-observer"
 
 const StreamlitPlayer = ({ args }: ComponentProps) => {
   const [playerEvents, setPlayerEvents] = useState({})
-  const divRef = useRef<HTMLDivElement>(null)
 
   // Handle events
   useEffect(() => {
@@ -28,33 +27,25 @@ const StreamlitPlayer = ({ args }: ComponentProps) => {
     setPlayerEvents(events)
   }, [args.events])
 
-  // Handle height
-  useEffect(() => {
-    Streamlit.setFrameHeight(args.options.height)
-
-    // Auto resize if no height is defined
-    if (!args.options.height) {
-      const ro = new ResizeObserver(() => {
-        Streamlit.setFrameHeight()
-      })
-
-      if (divRef.current) {
-        ro.observe(divRef.current)
-      }
-
-      return () => ro.disconnect()
-    }
-  }, [args.options.height])
-
   return (
-    <div ref={divRef}>
+    <HeightObserver onChange={Streamlit.setFrameHeight} fixedHeight={args.height}>
       <ReactPlayer
         url={args.url}
         width="100%"
+        height={args.height || undefined}
+        playing={args.playing || undefined}
+        loop={args.loop || undefined}
+        controls={args.controls || undefined}
+        light={args.light || undefined}
+        volume={args.volume}
+        muted={args.muted || undefined}
+        playbackRate={args.playbackRate}
+        progressInterval={args.progressInterval || undefined}
+        playsinline={args.playInline || undefined}
+        config={args.config || undefined}
         {...playerEvents}
-        {...args.options}
       />
-    </div>
+    </HeightObserver>
   )
 }
 
