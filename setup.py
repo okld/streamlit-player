@@ -6,7 +6,7 @@ README = (Path(__file__).parent/"README.md").read_text()
 
 setuptools.setup(
     name="streamlit-player",
-    version="0.1.2",
+    version="0.1.3",
     author="okld",
     author_email="",
     description="A streamlit component to embed video and music players from various websites.",
