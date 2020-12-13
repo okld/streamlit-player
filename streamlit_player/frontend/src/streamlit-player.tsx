@@ -40,7 +40,7 @@ const StreamlitPlayer = ({ args }: ComponentProps) => {
         volume={args.volume}
         muted={args.muted || undefined}
         playbackRate={args.playbackRate}
-        progressInterval={args.progressInterval || undefined}
+        progressInterval={args.progressInterval}
         playsinline={args.playInline || undefined}
         config={args.config || undefined}
         {...playerEvents}
