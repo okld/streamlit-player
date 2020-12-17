@@ -1,5 +1,5 @@
+import React, { useCallback, useEffect, useState } from "react"
 import ResizeObserver from "resize-observer-polyfill"
-import React, { useEffect, useRef } from "react"
 
 interface HeightObserverProps {
   children?: any
@@ -8,33 +8,38 @@ interface HeightObserverProps {
 }
 
 const HeightObserver = ({ children, fixedHeight, onChange }: HeightObserverProps) => {
-  const divRef = useRef<HTMLDivElement>(null)
+  const [container, setContainer] = useState<HTMLDivElement | null>(null)
+  const containerRef = (node: HTMLDivElement) => setContainer(node)
+
+  const changeCallback = useCallback(onChange, [])
 
   useEffect(() => {
     // Initialize height
-    onChange(fixedHeight || document.body.scrollHeight)
+    changeCallback(fixedHeight || document.body.scrollHeight)
 
     // Change height dynamically if fixedHeight is not set
-    if (!fixedHeight && divRef.current) {
+    if (!fixedHeight && container) {
 
       // Call onChange with new height as parameter
       const ro = new ResizeObserver(entries => {
-        const entry = entries.find(entry => entry.target === divRef.current)
+        const entry = entries.find(entry => entry.target === container)
         if (entry) {
-          onChange(entry.contentRect.height)
+          changeCallback(entry.contentRect.height)
         }
       })
 
       // Start observing div height changes
-      ro.observe(divRef.current)
+      ro.observe(container)
 
       // Unobserve div on unmount
-      return () => ro.disconnect()
+      return () => {
+        ro.disconnect()
+      }
     }
-  }, [fixedHeight, onChange])
+  }, [container, fixedHeight, changeCallback])
 
   return (
-    <div ref={divRef}>
+    <div ref={containerRef}>
       {children}
     </div>
   )
