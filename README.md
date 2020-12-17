@@ -1,6 +1,6 @@
 # Streamlit Player
 
-[![Open in Streamlit][share_badge]][share_link] [![GitHub][github_badge]][github_link] [![PyPI version][pypi_badge]][pypi_link] 
+[![Open in Streamlit][share_badge]][share_link] [![GitHub][github_badge]][github_link] [![PyPI][pypi_badge]][pypi_link] 
 
 ## Installation
 

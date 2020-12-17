@@ -6,7 +6,7 @@ README = (Path(__file__).parent/"README.md").read_text()
 
 setuptools.setup(
     name="streamlit-player",
-    version="0.1.4",
+    version="0.1.5",
     author="okld",
     author_email="",
     description="A streamlit component to embed video and music players from various websites.",
@@ -18,6 +18,6 @@ setuptools.setup(
     classifiers=[],
     python_requires=">=3.6",
     install_requires=[
-        "streamlit >= 0.63",  # TODO Change to 0.73?
+        "streamlit >= 0.73",
     ],
 )
