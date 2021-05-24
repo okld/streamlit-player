@@ -8,7 +8,7 @@
 pip install streamlit-player
 ```
 
-## Quick usage
+## Getting started
 
 ```python
 from streamlit_player import st_player
